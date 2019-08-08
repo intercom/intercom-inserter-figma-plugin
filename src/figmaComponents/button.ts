@@ -138,13 +138,16 @@ const createStyledText = ({ props, styles, font }) => (text: TextNode) => {
     horizontal: 'STRETCH',
     vertical: 'STRETCH',
   };
-  text.x = props.hasIcon ? 16 + 3 : 0;
+
+
   text.textAlignHorizontal = 'CENTER';
   text.textAlignVertical = 'CENTER';
   text.autoRename = true;
   text.fontName = font;
   text.fontSize = 14;
   text.fills = [styles.color];
+  text.x = props.hasIcon ? 16 + 4 : 0;
+  text.y = 0;
 
   return text;
 };
@@ -198,12 +201,9 @@ export const createButton = ({ asComponent = true, ...props }: Props) => {
     createStyledText({ props, styles, font })(text),
   ];
 
-  const totalWidth = styledText.width + (props.hasIcon ? 16 + 3 : 0) + 12 * 2;
+  const totalWidth = styledText.width + (props.hasIcon ? 16 + 4 : 0) + 12 * 2;
 
-  styledText.x =
-    (totalWidth - (styledText.width + (props.hasIcon ? 16 + 3 : 0))) / 2 +
-    16 +
-    3;
+  styledText.x = props.hasIcon ? 32 : 12;
 
   resizeNodes(styledFrame, styledRect)(totalWidth);
   resizeNodes(styledText)(styledText.width);
@@ -211,7 +211,7 @@ export const createButton = ({ asComponent = true, ...props }: Props) => {
   appendNodesToFrame(styledRect, styledText)(styledFrame);
 
   if (props.hasIcon) {
-    const x = (totalWidth - (styledText.width + 3 + 16)) / 2;
+    const x = (totalWidth - (styledText.width + 4 + 16)) / 2;
     const styledIcon = createIcon({ props, styles, x })(svg);
 
     appendNodesToFrame(styledIcon)(styledFrame);
