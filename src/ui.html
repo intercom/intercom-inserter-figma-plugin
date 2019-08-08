@@ -1,1 +1,22 @@
 <div id="react-page"></div>
+
+<script>
+    // Fire an analytics event to Zapier on completion;
+    let params = {
+        plugin: 'Pulse Content Auto-layout',
+        status: 'started'
+    };
+    
+    window.onmessage = async (event) => {
+        if (event.data.pluginMessage.type === 'analytics-event') {
+            var request = new XMLHttpRequest();
+            request.open('POST', 'https://hooks.zapier.com/hooks/catch/5233185/ob6p29b/');
+        
+            request.send(JSON.stringify(params));
+            request.onload = (msg) => {
+                window.parent.postMessage({pluginMessage: request.response}, '*')
+            };
+            
+        }
+    }
+</script> 
